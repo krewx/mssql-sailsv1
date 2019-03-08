@@ -1,29 +1,63 @@
 {
-  "name": "mssql-sailsv1",
-  "version": "0.0.3",
-  "description": "Module to interact between sails v1 and mssql server",
-  "main": "lib/adapter.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_from": "mssql-sailsv1@0.0.3",
+  "_id": "mssql-sailsv1@0.0.3",
+  "_inBundle": false,
+  "_integrity": "sha512-Bx7+FAe636Ty7J0eh1Xf0Jw0elfw+TaFXMjQHhRZuueE8O5juBeEmeALhXw4vQgyZl6O/cLUU66BcHbImoQ7bA==",
+  "_location": "/mssql-sailsv1",
+  "_phantomChildren": {
+    "sprintf-js": "1.0.3",
+    "util-deprecate": "1.0.2"
   },
-  "keywords": [
-    "sails",
-    "sqlserver",
-    "mssql",
-    "waterline"
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "mssql-sailsv1@0.0.3",
+    "name": "mssql-sailsv1",
+    "escapedName": "mssql-sailsv1",
+    "rawSpec": "0.0.3",
+    "saveSpec": null,
+    "fetchSpec": "0.0.3"
+  },
+  "_requiredBy": [
+    "/"
   ],
-  "author": "krewx",
-  "license": "MIT",
+  "_resolved": "https://registry.npmjs.org/mssql-sailsv1/-/mssql-sailsv1-0.0.3.tgz",
+  "_shasum": "fb036019acfa590156b18ac4a06c4c8e7ddc27d0",
+  "_spec": "mssql-sailsv1@0.0.3",
+  "_where": "C:\\sync\\back_2\\back",
+  "author": {
+    "name": "krewx"
+  },
+  "bugs": {
+    "url": "https://github.com/krewx/mssql-sailsv1/issues"
+  },
+  "bundleDependencies": false,
   "dependencies": {
     "lodash": "^4.17.11",
     "mssql": "^4.3.0",
     "underscore.string": "^3.3.5",
     "waterline-cursor": "0.0.7"
   },
+  "deprecated": false,
+  "description": "Module to interact between sails v1 and mssql server",
+  "homepage": "https://github.com/krewx/mssql-sailsv1#readme",
+  "keywords": [
+    "sails",
+    "sqlserver",
+    "mssql",
+    "waterline"
+  ],
+  "license": "MIT",
+  "main": "lib/adapter.js",
+  "name": "mssql-sailsv1",
   "repository": {
     "type": "git",
     "url": "git://github.com/krewx/mssql-sailsv1.git"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.3",
   "waterlineAdapter": {
     "type": "mssql-sailsv1",
     "interfaces": [

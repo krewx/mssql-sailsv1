@@ -39,26 +39,54 @@ utils.prepareValue = function(value) {
 };
 
 utils.buildOrderByStatement = function(criteria){
-	var queryPart = 'ORDER BY ';
+  var queryPart = 'ORDER BY ';
+  
+  if(criteria.sort.length){
+    // Sort through each sort attribute criteria
+    _.each(criteria.sort, function(direction, attrName) {
+      queryPart += '[' + Object.keys(direction)[0] + '] ';
 
-	// Sort through each sort attribute criteria
-	_.each(criteria.sort, function(direction, attrName) {
-
-		queryPart += '[' + attrName + '] ';
-
-		// Basic MongoDB-style numeric sort direction
-		if (direction === 1) {
-			queryPart += 'ASC, ';
-		} else {
-			queryPart += 'DESC, ';
-		}
-	});
+      // Basic MongoDB-style numeric sort direction
+      if (direction === 1) {
+        queryPart += 'ASC, ';
+      } else {
+        queryPart += 'DESC, ';
+      }
+    });
+  }else{
+    queryPart += '(SELECT 100)';
+  }
 
 	// Remove trailing comma
 	if(queryPart.slice(-2) === ', ') {
 		queryPart = queryPart.slice(0, -2) + ' ';
 	}
 	return queryPart;
+};
+
+/**
+ * Builds a Select statement determining if Aggeregate options are needed.
+ */
+
+
+utils.buildCountStatement =  function(criteria, table) {
+  var query = 'SELECT ';
+  //HANDLE SKIP
+  if (criteria.skip){
+	  var primaryKeySort = {};
+	  primaryKeySort[criteria.__primaryKey__] = 1;
+	  //@todo what to do with no primary key OR sort?
+    criteria.sort = criteria.sort || primaryKeySort;
+	  query += 'ROW_NUMBER() OVER (' +
+		  utils.buildOrderByStatement(criteria) +
+		  ') AS \'__rownum__\', ';
+  }
+  else if (criteria.limit) {
+  // SQL Server implementation of LIMIT
+    query += 'TOP ' + criteria.limit + ' ';
+  }
+
+  return query += 'COUNT(*) as cnt FROM '+table ;
 };
 
 /**
@@ -145,7 +173,7 @@ utils.buildSelectStatement = function(criteria, table) {
 	  var primaryKeySort = {};
 	  primaryKeySort[criteria.__primaryKey__] = 1;
 	  //@todo what to do with no primary key OR sort?
-	  criteria.sort = criteria.sort || primaryKeySort;
+    criteria.sort = criteria.sort || primaryKeySort;
 	  query += 'ROW_NUMBER() OVER (' +
 		  utils.buildOrderByStatement(criteria) +
 		  ') AS \'__rownum__\', ';

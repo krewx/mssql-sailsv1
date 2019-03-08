@@ -71,6 +71,20 @@ var sql = {
     	return 'ALTER TABLE ' + tableName + ' DROP COLUMN ' + attrName;
 	},
 
+	countQuery: function (collectionName, options) {
+		var query = utils.buildCountStatement(options, collectionName);
+		query += sql.serializeOptions(collectionName, options);
+		if (options.skip){
+			var outerOffsetQuery = 'SELECT ';
+			if (options.limit){
+				outerOffsetQuery += 'TOP ' + options.limit + ' ';
+			}
+			outerOffsetQuery += '* FROM (' + query + ') __outeroffset__ WHERE __outeroffset__.__rownum__ > ' + options.skip + ' ';
+			query = outerOffsetQuery;
+		}
+		return query;
+	},
+
 	selectQuery: function (collectionName, options) {
 		var query = utils.buildSelectStatement(options, collectionName);
 		query += sql.serializeOptions(collectionName, options);
